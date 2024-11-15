@@ -63,8 +63,8 @@ android {
 android.useAndroidX=true
 android.enableJetifier=true
 
-***then in WeightDataRepo.java
-replace @Database(entities = {WeightData.class},version = 2) with
+***then in WeightDataRepo.java, if the code fails for DAO reasons
+ @Database(entities = {WeightData.class},version = 2) with
 @Database(entities = {WeightData.class},version = 1)
-because you wont have a Database on your pc yet so its the first version.
+
 

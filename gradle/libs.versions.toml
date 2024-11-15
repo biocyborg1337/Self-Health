@@ -1,3 +1,4 @@
+
 [versions]
 agp = "8.5.2"
 junit = "4.13.2"
@@ -23,4 +24,5 @@ support-annotations = { group = "com.android.support", name = "support-annotatio
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+
 
