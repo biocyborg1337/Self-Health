@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">graph</string>
+    <string name="app_name">HEALTH</string>
     <string name="nf_weight">Weight</string>
     <string name="nf_date">Date</string>
     <string name="nav_graphfrag">Graph</string>
@@ -9,7 +9,7 @@
     <string name="ma_btnChart">Progress</string>
     <string name="print_button">Print</string>
     <string name="clear_button">Clear</string>
-    <string name="sort_button">Sort</string>
+    <string name="sort_button">Display</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

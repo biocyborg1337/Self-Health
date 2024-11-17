@@ -108,7 +108,7 @@
             android:id="@+id/numberfragment_show"
             android:layout_width="350dp"
             android:layout_height="275dp"
-            android:textSize="10sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.491"

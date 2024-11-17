@@ -9,8 +9,9 @@ import androidx.room.RoomDatabase;
 import java.util.ArrayList;
 import java.util.Date;
 import  java.util.List;
-@Database(entities = {WeightData.class},version = 2
-   //     autoMigrations= {@AutoMigration(from = 1,to = 2)},exportSchema = true
+/* , exportSchema = false*/
+@Database(entities = {WeightData.class},version = 2,
+        exportSchema = false
 )
 public abstract class WeightDataRepo extends RoomDatabase {
 

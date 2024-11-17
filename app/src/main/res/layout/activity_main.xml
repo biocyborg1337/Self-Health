@@ -62,10 +62,10 @@
         <androidx.fragment.app.FragmentContainerView
 
             android:id="@+id/fragmentContainerView"
-            android:name="com.zybooks.graph.NumberFragment"
+            android:name="com.zybooks.graph.bmiCalculator"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/fragment_number"
+            tools:layout="@layout/fragment_bmi_calculator"
             android:layout_margin="5dp"/>
     </LinearLayout>
 

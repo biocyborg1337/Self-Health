@@ -1,16 +1,16 @@
 <resources>
-    <style name="Theme.TheBandDatabase" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Theme.HealthApp" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:background">@color/blueberry_400</item>
         <item name="android:buttonStyle">@style/buttonStyle</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="bandListName">
+    <style name="mainText">
         <item name="android:textSize">26sp</item>
         <item name="android:padding">8dp</item>
     </style>
 
-    <style name="bandName">
+    <style name="title">
         <item name="android:textSize">40sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:paddingLeft">30dp</item>
