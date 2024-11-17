@@ -1,10 +1,7 @@
 package com.zybooks.graph;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,34 +11,32 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-
 public class bmiCalculator extends Fragment {
     private ImageView logo;
     private EditText poundsvalue, feetsvalue, bmiresult, aage;
-    private CheckBox female, masculine
-            ,sed,sal,mal,al,va;
+    private CheckBox female, masculine, sed, sal, mal, al, va;
     private Button bmi, idealweight, erase;
-    private Double maleBmr, womanBmr, maleABmr,womanABmr, adultBmi;
+    private Double maleBmr, womanBmr, maleABmr, womanABmr, adultBmi;
     CalcBmrBmi cbb = new CalcBmrBmi();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_bmi_calculator,container,false);
+        View view = inflater.inflate(R.layout.fragment_bmi_calculator, container, false);
+
+        // Initialize the UI elements
         poundsvalue = view.findViewById(R.id.weightvalue);
         feetsvalue = view.findViewById(R.id.heightvalue);
         aage = view.findViewById(R.id.AGEvalue);
         bmiresult = view.findViewById(R.id.etResult);
-
         bmi = view.findViewById(R.id.buttonbmi);
         idealweight = view.findViewById(R.id.buttonideal);
         erase = view.findViewById(R.id.buttonerase);
-
         female = view.findViewById(R.id.fem);
         masculine = view.findViewById(R.id.mas);
         sed = view.findViewById(R.id.sed);
@@ -50,109 +45,158 @@ public class bmiCalculator extends Fragment {
         al = view.findViewById(R.id.al);
         va = view.findViewById(R.id.va);
 
-
-
-        bmi.setOnClickListener(v-> {
-            Integer height=0, age=0;
-            Double weight= (double) 0;
+        // BMI button click listener
+        bmi.setOnClickListener(v -> {
+            Integer height = 0, age = 0;
+            Double weight = 0.0;
             String pv = poundsvalue.getText().toString();
             String fs = feetsvalue.getText().toString();
             String ag = aage.getText().toString();
             poundsvalue.setText("");
             feetsvalue.setText("");
             aage.setText("");
-            if (female.isChecked()) {
-                try {
-                    weight = Double.parseDouble(pv);
-                    height = Integer.parseInt(fs);
-                    age = Integer.parseInt(ag);
-                } catch (Exception e) {
-                    Log.d("BMI button", "Not number somehow");
-                }
-                womanBmr = cbb.wbmrC(weight, height, age);
-                adultBmi = cbb.bmiC(weight, height);
-                if (sed.isChecked()) {
-                    womanABmr = Math.ceil(womanBmr * 1.2);
-                } else if (sal.isChecked()) {
-                    womanABmr = Math.ceil(womanBmr * 1.375);
-                } else if (mal.isChecked()) {
-                    womanABmr = Math.ceil(womanBmr * 1.55);
-                } else if (al.isChecked()) {
-                    womanABmr = Math.ceil(womanBmr * 1.725);
-                } else {
-                    womanABmr = Math.ceil(womanBmr * 1.9);
-                }
 
-
-                Bundle bundle = new Bundle();
-                bundle.putDouble("br1", womanABmr);
-                bundle.putDouble("abmi", adultBmi);
-
-                TextBmrBmi textBmrBmi = new TextBmrBmi();
-                textBmrBmi.setArguments(bundle);
-
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainerView, textBmrBmi).commit();
+            try {
+                weight = Double.parseDouble(pv);
+                height = Integer.parseInt(fs);
+                age = Integer.parseInt(ag);
+            } catch (Exception e) {
+                Log.d("BMI button", "Invalid input");
+                return; // exit on invalid input
             }
-            else if (masculine.isChecked()){
-                try {
-                    weight = Double.parseDouble(pv);
-                    height = Integer.parseInt(fs);
-                    age = Integer.parseInt(ag);
-                } catch (Exception e) {
-                    Log.d("BMI button", "Not number somehow");
-                }
+
+            // Common BMI calculation using pounds and inches
+            adultBmi = cbb.bmiC(weight, height);
+
+            if (female.isChecked()) {
+                // Calculate BMR for female
+                womanBmr = cbb.wbmrC(weight, height, age);
+                // Adjust BMR based on activity
+                womanABmr = adjustBmrByActivity(womanBmr);
+                // Passing results to another fragment
+                passResultsToFragment(womanABmr, adultBmi);
+            } else if (masculine.isChecked()) {
+                // Calculate BMR for male
                 maleBmr = cbb.mbmrC(weight, height, age);
-                adultBmi = cbb.bmiC(weight, height);
-                String debug = maleBmr.toString();
-                Log.d("Works?", debug);
-                if (sed.isChecked()) {
-                    maleABmr = Math.ceil(maleBmr * 1.2);
-                } else if (sal.isChecked()) {
-                    maleABmr = Math.ceil(maleBmr * 1.375);
-                } else if (mal.isChecked()) {
-                    maleABmr = Math.ceil(maleBmr * 1.55);
-                } else if (al.isChecked()) {
-                    maleABmr = Math.ceil(maleBmr * 1.725);
-                } else {
-                    maleABmr = Math.ceil(maleBmr * 1.9);
-                }
+                // Adjust BMR based on activity
+                maleABmr = adjustBmrByActivity(maleBmr);
+                // Passing results to another fragment
+                passResultsToFragment(maleABmr, adultBmi);
+            }
 
-                Bundle bundle = new Bundle();
-                bundle.putDouble("br1", maleABmr);
-                bundle.putDouble("abmi", adultBmi);
+            // Reset checkboxes after calculation
+            resetCheckBoxes();
+        });
 
-                TextBmrBmi textBmrBmi = new TextBmrBmi();
-                textBmrBmi.setArguments(bundle);
+        // Ideal Weight button click listener
+        idealweight.setOnClickListener(v -> {
+            Integer height = 0;
+            String fs = feetsvalue.getText().toString();
+            feetsvalue.setText("");
 
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainerView, textBmrBmi).commit();
+            try {
+                height = Integer.parseInt(fs);
+            } catch (Exception e) {
+                Log.d("IdealWeight button", "Invalid height");
+            }
+
+            if (height > 0) {
+                String idealWeightRange = calculateIdealWeightBasedOnGenderAndActivity(height);
+                bmiresult.setText(idealWeightRange);
+            } else {
+                bmiresult.setText("Please enter a valid height.");
             }
         });
-            if(female.isChecked()) {
-                female.toggle();
-            }
-            if(masculine.isChecked()){
-                masculine.toggle();
-            }
-            if(sed.isChecked()){
-                sed.toggle();
-            }
-            if(sal.isChecked()) {
-                sal.toggle();
-            }
-
-            if(mal.isChecked()){
-                mal.toggle();
-            }
-            if(al.isChecked()){
-                al.toggle();
-            }
-            if(va.isChecked()){
-                va.toggle();
-            }
-
 
         return view;
+    }
+
+    // Method to adjust BMR based on the selected activity level
+    private double adjustBmrByActivity(double baseBmr) {
+        if (sed.isChecked()) {
+            return Math.ceil(baseBmr * 1.2); // Sedentary
+        } else if (sal.isChecked()) {
+            return Math.ceil(baseBmr * 1.375); // Slightly active
+        } else if (mal.isChecked()) {
+            return Math.ceil(baseBmr * 1.55); // Moderately active
+        } else if (al.isChecked()) {
+            return Math.ceil(baseBmr * 1.725); // Active
+        } else if (va.isChecked()) {
+            return Math.ceil(baseBmr * 1.9); // Very active
+        }
+        return baseBmr; // Default if no activity level is checked
+    }
+
+    // Method to pass results to another fragment
+    private void passResultsToFragment(double adjustedBmr, double bmi) {
+        Bundle bundle = new Bundle();
+        bundle.putDouble("br1", adjustedBmr);
+        bundle.putDouble("abmi", bmi);
+
+        TextBmrBmi textBmrBmi = new TextBmrBmi();
+        textBmrBmi.setArguments(bundle);
+
+        // Replace the current fragment with the result fragment
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, textBmrBmi).commit();
+    }
+
+    // Method to reset checkboxes after calculation
+    private void resetCheckBoxes() {
+        if (female.isChecked()) female.toggle();
+        if (masculine.isChecked()) masculine.toggle();
+        if (sed.isChecked()) sed.toggle();
+        if (sal.isChecked()) sal.toggle();
+        if (mal.isChecked()) mal.toggle();
+        if (al.isChecked()) al.toggle();
+        if (va.isChecked()) va.toggle();
+    }
+
+    // Method to calculate ideal weight range based on height (in inches)
+    private String calculateIdealWeightBasedOnGenderAndActivity(int heightInInches) {
+        // Calculate the minimum and maximum weight in pounds for BMI 18.5 to 24.9
+        double minWeightLbs = 18.5 * heightInInches * heightInInches / 703; // Min weight for BMI 18.5 (in lbs)
+        double maxWeightLbs = 24.9 * heightInInches * heightInInches / 703; // Max weight for BMI 24.9 (in lbs)
+
+        // Adjust weight based on gender and activity level
+        if (female.isChecked()) {
+            // Female adjustments based on activity
+            if (sed.isChecked()) {
+                minWeightLbs *= 1.05;
+                maxWeightLbs *= 1.05;
+            } else if (sal.isChecked()) {
+                minWeightLbs *= 1.1;
+                maxWeightLbs *= 1.1;
+            } else if (mal.isChecked()) {
+                minWeightLbs *= 1.15;
+                maxWeightLbs *= 1.15;
+            } else if (al.isChecked()) {
+                minWeightLbs *= 1.2;
+                maxWeightLbs *= 1.2;
+            } else if (va.isChecked()) {
+                minWeightLbs *= 1.25;
+                maxWeightLbs *= 1.25;
+            }
+        } else if (masculine.isChecked()) {
+            // Male adjustments based on activity
+            if (sed.isChecked()) {
+                minWeightLbs *= 1.1;
+                maxWeightLbs *= 1.1;
+            } else if (sal.isChecked()) {
+                minWeightLbs *= 1.15;
+                maxWeightLbs *= 1.15;
+            } else if (mal.isChecked()) {
+                minWeightLbs *= 1.2;
+                maxWeightLbs *= 1.2;
+            } else if (al.isChecked()) {
+                minWeightLbs *= 1.25;
+                maxWeightLbs *= 1.25;
+            } else if (va.isChecked()) {
+                minWeightLbs *= 1.3;
+                maxWeightLbs *= 1.3;
+            }
+        }
+
+        return String.format("%.1f - %.1f lbs", minWeightLbs, maxWeightLbs);
     }
 }
