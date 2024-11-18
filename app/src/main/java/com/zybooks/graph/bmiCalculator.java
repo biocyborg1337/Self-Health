@@ -38,7 +38,7 @@ public class bmiCalculator extends Fragment {
         bmiresult = view.findViewById(R.id.etResult);
         Button bmi = view.findViewById(R.id.buttonbmi);
         Button idealweight = view.findViewById(R.id.buttonideal);
-        //Button erase = view.findViewById(R.id.buttonerase);
+        Button erase = view.findViewById(R.id.buttonerase);
         female = view.findViewById(R.id.fem);
         masculine = view.findViewById(R.id.mas);
         sed = view.findViewById(R.id.sed);
@@ -110,7 +110,17 @@ public class bmiCalculator extends Fragment {
             }
         });
 
+        erase.setOnClickListener(v -> erase());
+
         return view;
+    }
+
+    private void erase() {
+        resetCheckBoxes();
+        poundsvalue.setText("");
+        feetsvalue.setText("");
+        aage.setText("");
+        bmiresult.setText("");
     }
 
     // Method to adjust BMR based on the selected activity level
