@@ -119,7 +119,7 @@ public class NumberFragment extends Fragment {
             public void onClick(View view){
                 DatePickerDialog datePickerDialog = new DatePickerDialog(mDateData.getContext(), (datePicker, year1, month1, day1) -> {
                     String mo, da, ye;
-
+                    month1=month1+1;
                     if(day1 < 10 && month1 <10){
                         mo = String.format("%2d",month1).replace(' ','0');
                          da = String.format("%2d",day1).replace(' ','0');
@@ -168,6 +168,11 @@ public class NumberFragment extends Fragment {
         });
         nfPrint.setOnClickListener(v->{
             getWeightDataListInBackground();
+            /*LogText logText = new LogText();
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainerView, LogText.class,null)
+                    .commit();*/
         });
         nfClear.setOnClickListener(v->{
             clearWeightDataListInBackground();

@@ -36,7 +36,6 @@ public class bmiCalculator extends Fragment {
         bmiresult = view.findViewById(R.id.etResult);
         bmi = view.findViewById(R.id.buttonbmi);
         idealweight = view.findViewById(R.id.buttonideal);
-        erase = view.findViewById(R.id.buttonerase);
         female = view.findViewById(R.id.fem);
         masculine = view.findViewById(R.id.mas);
         sed = view.findViewById(R.id.sed);

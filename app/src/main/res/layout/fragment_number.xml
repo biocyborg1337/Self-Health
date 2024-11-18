@@ -18,10 +18,10 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:text="Weight Info"
-            android:textColor="@color/titlecolor"
             android:textAlignment="center"
+            android:textColor="@color/titlecolor"
             android:textSize="50sp"
-            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
         <ImageView
@@ -31,7 +31,7 @@
             android:background="@drawable/schedule_calendar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.098" />
@@ -57,7 +57,7 @@
             android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.469"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView"
             app:layout_constraintVertical_bias="0.281" />
@@ -71,7 +71,7 @@
             android:theme="@style/buttonStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.624"
+            app:layout_constraintHorizontal_bias="0.627"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.37" />
@@ -100,22 +100,24 @@
             android:theme="@style/buttonStyle"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.482" />
+            app:layout_constraintVertical_bias="0.48" />
 
         <TextView
             android:id="@+id/numberfragment_show"
-            android:layout_width="350dp"
-            android:layout_height="275dp"
-            android:textSize="20sp"
+            android:layout_width="396dp"
+            android:layout_height="330dp"
+            app:autoSizeMaxTextSize="25sp"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintHorizontal_bias="0.466"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.925" />
+            app:layout_constraintVertical_bias="0.96" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
