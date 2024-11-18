@@ -13,5 +13,24 @@
     <string name="clear_button">Clear</string>
     <string name="sort_button">Sort</string>
 
-    <string name="faq_fragment">Hello blank fragment</string>
+    <string name="faq_fragment">
+        <b>What is BMI?</b>\nBMI is a very basic tool use to divide people into weight classes.
+        It is calculated by using a person\'s height and weight.
+        BMI is not without flaws however as it fails to take into account the difference between muscle and fat, for instance it may look at a bodybuilder and classify them as obese based solely on the numbers.
+        It may not be accurate for the elderly, professional athletes and pregnant women.
+        However it should work by and large for the average person!\n\n
+        <b>What are the health risks of being overweight or underweight?</b>\n
+        There are a multiude of health risks that may crop up if someone is severely over or underweight.
+        Overweight individuals, have a higher risk of cardiovascular diseases such as heart disease, high blood pressure, and more.
+        It also increases the risk of metabolic disorders, musculoskeletal problems, and respiratory problems.
+        Being underweight comes with it\'s own set of issues such as fatigue, weakness, anemia, low white blood cell count, bone health problems, and reproductive issues in women.\n\n
+        <b>How can I lose weight in a healthy way?</b>\n
+        Losing weight is almost deceptively simple, in it\'s barest form, you simply need to use more calories than you are intaking.
+        You can lose weight by simply lowering your intake or upping your activity level and therefore use more calories.
+        However you need to do so in a healthy and consistent manner.
+        Crash diets may help you lose weight quickly but they often result in you gaining weight back as they are not meant to be a permanent diet. \n\n
+        <b>How can I gain weight in a healthy way?</b>\n
+        Gaining weight is slightly more complicated, as while the same basic principle still applies, you run into the risk of gaining just fat if you simply start scarfing down a bunch of food in order to surpass your caloric need.
+        You should maintain a steady level of activity as you gain weight alongside a healthy diet in order to make sure you are not gaining purely fat.
+    </string>
 </resources>
