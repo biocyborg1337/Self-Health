@@ -27,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ideal Weight"
+                android:textSize="20sp"
                 android:textAlignment="center"
                 android:theme="@style/smallbuttonStyle"
 
@@ -41,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ma_btnWI"
+                android:textSize="20sp"
                 android:theme="@style/smallbuttonStyle"
 
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -53,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ma_btnChart"
+                android:textSize="20sp"
                 android:theme="@style/smallbuttonStyle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
