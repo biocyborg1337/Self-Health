@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import java.util.Locale;
 
 public class bmiCalculator extends Fragment {
     //private ImageView logo;
     private EditText poundsvalue, feetsvalue, bmiresult, aage;
-    private CheckBox female, masculine, sed, sal, mal, al, va;
+    private RadioButton female, masculine, sed, sal, mal, al, va;
     private Double maleBmr, womanBmr, maleABmr, womanABmr, adultBmi;
     CalcBmrBmi cbb = new CalcBmrBmi();
 
@@ -94,7 +95,7 @@ public class bmiCalculator extends Fragment {
         idealweight.setOnClickListener(v -> {
             int height = 0;
             String fs = feetsvalue.getText().toString();
-            feetsvalue.setText("");
+            //feetsvalue.setText("");
 
             try {
                 height = Integer.parseInt(fs);
@@ -155,13 +156,14 @@ public class bmiCalculator extends Fragment {
 
     // Method to reset checkboxes after calculation
     private void resetCheckBoxes() {
-        if (female.isChecked()) female.toggle();
-        if (masculine.isChecked()) masculine.toggle();
-        if (sed.isChecked()) sed.toggle();
-        if (sal.isChecked()) sal.toggle();
-        if (mal.isChecked()) mal.toggle();
-        if (al.isChecked()) al.toggle();
-        if (va.isChecked()) va.toggle();
+        female.setChecked(false);
+        masculine.setChecked(false);
+        sed.setChecked(false);
+        sal.setChecked(false);
+        mal.setChecked(false);
+        al.setChecked(false);
+        va.setChecked(false);
+        
     }
 
     // Method to calculate ideal weight range based on height (in inches)
