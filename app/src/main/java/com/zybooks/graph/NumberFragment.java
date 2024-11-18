@@ -1,48 +1,30 @@
 package com.zybooks.graph;
 
-import static android.text.TextUtils.substring;
-
 import android.app.DatePickerDialog;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Parcelable;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.content.Context;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.room.Query;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -93,7 +75,7 @@ public class NumberFragment extends Fragment {
             }
         };
 
-        weightDataDB = Room.databaseBuilder(getContext(), WeightDataRepo.class, "WeightDataDB")
+        weightDataDB = Room.databaseBuilder(requireContext(), WeightDataRepo.class, "WeightDataDB")
                 .addCallback(myCallBack).fallbackToDestructiveMigration().build();
 
         Calendar calendar = Calendar.getInstance();
@@ -166,12 +148,8 @@ public class NumberFragment extends Fragment {
             addWeightDataInBackground(wd1);
             mWeightData.setText("");
         });
-        nfPrint.setOnClickListener(v -> {
-            getWeightDataListInBackground();
-        });
-        nfClear.setOnClickListener(v -> {
-            clearWeightDataListInBackground();
-        });
+        nfPrint.setOnClickListener(v -> getWeightDataListInBackground());
+        nfClear.setOnClickListener(v -> clearWeightDataListInBackground());
         /*
         nfSort.setOnClickListener(v->{
             getOWeightDataListInBackground();
@@ -185,20 +163,12 @@ public class NumberFragment extends Fragment {
 
         Handler handler = new Handler(Looper.getMainLooper());
 
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                //background task
-                weightDataDB.getWeightDataDAO().addWeightData(weightData);
+        executorService.execute(() -> {
+            //background task
+            weightDataDB.getWeightDataDAO().addWeightData(weightData);
 
-                //on finishing task
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getContext(), "Added to Database", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+            //on finishing task
+            handler.post(() -> Toast.makeText(getContext(), "Added to Database", Toast.LENGTH_SHORT).show());
         });
 
     }
@@ -208,27 +178,21 @@ public class NumberFragment extends Fragment {
 
         Handler handler = new Handler(Looper.getMainLooper());
 
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                //background task
-                weightDataList = weightDataDB.getWeightDataDAO().getOAllWeightData();
+        executorService.execute(() -> {
+            //background task
+            weightDataList = weightDataDB.getWeightDataDAO().getOAllWeightData();
 
-                //on finishing task
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        StringBuilder sb = new StringBuilder();
-                        for (WeightData w : weightDataList) {
-                            sb.append(" " + w.getDate() + ":" + w.getWeight() + " lbs");
-                            sb.append("\n");
-                        }
-                        String printData = sb.toString();
-                        printDB.setText(printData);
-                        //Toast.makeText(getContext(), ""+printData, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+            //on finishing task
+            handler.post(() -> {
+                StringBuilder sb = new StringBuilder();
+                for (WeightData w : weightDataList) {
+                    sb.append(" ").append(w.getDate()).append(":").append(w.getWeight()).append(" lbs");
+                    sb.append("\n");
+                }
+                String printData = sb.toString();
+                printDB.setText(printData);
+                //Toast.makeText(getContext(), ""+printData, Toast.LENGTH_LONG).show();
+            });
         });
 
     }
@@ -238,25 +202,17 @@ public class NumberFragment extends Fragment {
 
         Handler handler = new Handler(Looper.getMainLooper());
 
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                //background task
+        executorService.execute(() -> {
+            //background task
 
-                weightDataDB.getWeightDataDAO().deleteAllwd();
-                /*weightDataDB = Room.databaseBuilder(getContext(),
-                                WeightDataRepo.class, "WeightDataDB")
-                        .fallbackToDestructiveMigration()
-                        .build(); */
+            weightDataDB.getWeightDataDAO().deleteAllwd();
+            /*weightDataDB = Room.databaseBuilder(getContext(),
+                            WeightDataRepo.class, "WeightDataDB")
+                    .fallbackToDestructiveMigration()
+                    .build(); */
 
-                //on finishing task
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getContext(), "Database cleared!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+            //on finishing task
+            handler.post(() -> Toast.makeText(getContext(), "Database cleared!", Toast.LENGTH_SHORT).show());
         });
 
     }/*

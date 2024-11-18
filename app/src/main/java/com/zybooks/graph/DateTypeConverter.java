@@ -6,13 +6,11 @@ import android.os.Build;
 import androidx.room.TypeConverter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class DateTypeConverter {
     @TypeConverter
     public static LocalDate toDate(Integer dateInteger) {
-        LocalDate dt = null;
+        LocalDate dt;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             dt = LocalDate.now();
             int Year = dt.getYear();

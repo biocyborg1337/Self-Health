@@ -6,13 +6,10 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity(tableName = "Weight Chart")
 public class WeightData implements Parcelable {
@@ -26,10 +23,6 @@ public class WeightData implements Parcelable {
 
     @ColumnInfo(name = "weight")
     Integer weight;
-
-    @Ignore
-    public WeightData() {
-    }
 
     public WeightData(LocalDate date, Integer weight) {
         this.date = date;
@@ -66,9 +59,11 @@ public class WeightData implements Parcelable {
         return weight;
     }
 
+    /*
     public void setDate(LocalDate date) {
         this.date = date;
     }
+    */
 
     public void setWeight(Integer weight) {
         this.weight = weight;

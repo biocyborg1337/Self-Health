@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -19,7 +18,6 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -39,7 +37,7 @@ public class GraphFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_graph, container, false);
-        chart = (GraphView) view.findViewById(R.id.chart);
+        chart = view.findViewById(R.id.chart);
         gfSort = view.findViewById(R.id.gf_sort);
         chart.addSeries(series);
         RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
@@ -54,12 +52,10 @@ public class GraphFragment extends Fragment {
             }
         };
 
-        weightDataDB = Room.databaseBuilder(getContext(), WeightDataRepo.class, "WeightDataDB")
+        weightDataDB = Room.databaseBuilder(requireContext(), WeightDataRepo.class, "WeightDataDB")
                 .addCallback(myCallBack).build();
 
-        gfSort.setOnClickListener(v -> {
-            getOWeightDataListInBackground();
-        });
+        gfSort.setOnClickListener(v -> getOWeightDataListInBackground());
 
         return view;
     }
@@ -69,23 +65,17 @@ public class GraphFragment extends Fragment {
 
         Handler handler = new Handler(Looper.getMainLooper());
 
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                //background task
-                wd = weightDataDB.getWeightDataDAO().getOAllWeightData();
+        executorService.execute(() -> {
+            //background task
+            wd = weightDataDB.getWeightDataDAO().getOAllWeightData();
 
 
-                //on finishing task
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
+            //on finishing task
+            handler.post(() -> {
 
-                        series.resetData(getData());
-                        //Toast.makeText(getContext(), ""+printData, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+                series.resetData(getData());
+                //Toast.makeText(getContext(), ""+printData, Toast.LENGTH_LONG).show();
+            });
         });
     }
 

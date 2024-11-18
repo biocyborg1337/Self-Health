@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
+
+import java.util.Locale;
 
 public class bmiCalculator extends Fragment {
-    private ImageView logo;
+    //private ImageView logo;
     private EditText poundsvalue, feetsvalue, bmiresult, aage;
     private CheckBox female, masculine, sed, sal, mal, al, va;
-    private Button bmi, idealweight, erase;
     private Double maleBmr, womanBmr, maleABmr, womanABmr, adultBmi;
     CalcBmrBmi cbb = new CalcBmrBmi();
 
@@ -36,9 +36,9 @@ public class bmiCalculator extends Fragment {
         feetsvalue = view.findViewById(R.id.heightvalue);
         aage = view.findViewById(R.id.AGEvalue);
         bmiresult = view.findViewById(R.id.etResult);
-        bmi = view.findViewById(R.id.buttonbmi);
-        idealweight = view.findViewById(R.id.buttonideal);
-        erase = view.findViewById(R.id.buttonerase);
+        Button bmi = view.findViewById(R.id.buttonbmi);
+        Button idealweight = view.findViewById(R.id.buttonideal);
+        //Button erase = view.findViewById(R.id.buttonerase);
         female = view.findViewById(R.id.fem);
         masculine = view.findViewById(R.id.mas);
         sed = view.findViewById(R.id.sed);
@@ -49,8 +49,8 @@ public class bmiCalculator extends Fragment {
 
         // BMI button click listener
         bmi.setOnClickListener(v -> {
-            Integer height = 0, age = 0;
-            Double weight = 0.0;
+            int height, age;
+            Double weight;
             String pv = poundsvalue.getText().toString();
             String fs = feetsvalue.getText().toString();
             String ag = aage.getText().toString();
@@ -92,7 +92,7 @@ public class bmiCalculator extends Fragment {
 
         // Ideal Weight button click listener
         idealweight.setOnClickListener(v -> {
-            Integer height = 0;
+            int height = 0;
             String fs = feetsvalue.getText().toString();
             feetsvalue.setText("");
 
@@ -139,7 +139,7 @@ public class bmiCalculator extends Fragment {
         textBmrBmi.setArguments(bundle);
 
         // Replace the current fragment with the result fragment
-        getActivity().getSupportFragmentManager().beginTransaction()
+        requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, textBmrBmi).commit();
     }
 
@@ -199,6 +199,6 @@ public class bmiCalculator extends Fragment {
             }
         }
 
-        return String.format("%.1f - %.1f lbs", minWeightLbs, maxWeightLbs);
+        return String.format(Locale.US, "%.1f - %.1f lbs", minWeightLbs, maxWeightLbs);
     }
 }
