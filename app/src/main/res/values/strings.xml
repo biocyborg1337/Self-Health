@@ -6,10 +6,12 @@
     <string name="nav_numberfrag">Number</string>
     <string name="save_button">Save</string>
     <string name="ma_btnWI">Log</string>
+    <string name="faq_button">FAQ</string>
+    <string name="ideal_weight_button">Ideal Weight</string>
     <string name="ma_btnChart">Progress</string>
     <string name="print_button">Print</string>
     <string name="clear_button">Clear</string>
     <string name="sort_button">Sort</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="faq_fragment">Hello blank fragment</string>
 </resources>

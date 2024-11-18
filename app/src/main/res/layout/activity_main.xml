@@ -23,18 +23,42 @@
             app:layout_constraintBottom_toTopOf="@id/LL2">
 
             <Button
+                android:id="@+id/btnChart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ma_btnChart"
+                android:textSize="18sp"
+                android:theme="@style/smallbuttonStyle"
+                app:layout_constraintBaseline_toBaselineOf="@+id/btnWI"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnWI" />
+
+            <Button
                 android:id="@+id/lcalbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ideal Weight"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:theme="@style/smallbuttonStyle"
+                android:layout_marginStart="2dp"
 
+                android:text="@string/ideal_weight_button"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:theme="@style/smallbuttonStyle"
+                app:layout_constraintBaseline_toBaselineOf="@+id/faq_button"
+                app:layout_constraintEnd_toStartOf="@+id/faq_button"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/faq_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/faq_button"
+
+                android:textSize="18sp"
+                android:theme="@style/smallbuttonStyle"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/btnWI"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnWI"
+                app:layout_constraintStart_toEndOf="@+id/lcalbutton"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
@@ -42,24 +66,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ma_btnWI"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:theme="@style/smallbuttonStyle"
 
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/lcalbutton"
-                app:layout_constraintRight_toLeftOf="@id/btnChart"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btnChart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ma_btnChart"
-                android:textSize="20sp"
-                android:theme="@style/smallbuttonStyle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/faq_button"
+                app:layout_constraintEnd_toStartOf="@+id/btnChart"
+                app:layout_constraintStart_toEndOf="@+id/faq_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.fragment.app.FragmentContainerView

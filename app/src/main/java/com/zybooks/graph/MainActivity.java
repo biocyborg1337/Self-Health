@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnwi = findViewById(R.id.btnWI);
         Button btnchart = findViewById(R.id.btnChart);
         Button btnBmiBmr = findViewById(R.id.lcalbutton);
+        Button faq_button = findViewById(R.id.faq_button);
 
 
         btnwi.setOnClickListener(view -> fragmentManager.beginTransaction()
@@ -38,5 +39,12 @@ public class MainActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .addToBackStack("name")
                 .commit());
+
+        faq_button.setOnClickListener(view -> fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, QAFragment.class, null)
+                .setReorderingAllowed(true)
+                .addToBackStack("name")
+                .commit()
+        );
     }
 }
