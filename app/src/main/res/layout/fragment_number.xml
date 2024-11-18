@@ -107,15 +107,20 @@
             app:layout_constraintTop_toTopOf="@+id/textView"
             app:layout_constraintVertical_bias="0.458" />
 
-        <TextView
-            android:id="@+id/numberfragment_show"
+        <ScrollView
             android:layout_width="350dp"
             android:layout_height="275dp"
-            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/numberfragment_clear" />
+            app:layout_constraintTop_toBottomOf="@+id/numberfragment_clear">
+        <TextView
+            android:id="@+id/numberfragment_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+             />
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -1,6 +1,7 @@
 package com.zybooks.graph;
 
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -130,6 +131,9 @@ public class NumberFragment extends Fragment {
                 numWeight = Integer.parseInt(weightStr);
             } catch (Exception e) {
                 Log.d("Weight Data", "Not Numeric");
+            }
+            if(lDate == null) if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                lDate = LocalDate.now();
             }
             WeightData wd1 = new WeightData(lDate, numWeight);
 
