@@ -97,40 +97,28 @@ public class NumberFragment extends Fragment {
             datePickerDialog.show();
         });*/
 
-        mDateData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(mDateData.getContext(), (datePicker, year1, month1, day1) -> {
-                    String mo, da, ye;
+        mDateData.setOnClickListener(view1 -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(mDateData.getContext(), (datePicker, year1, month1, day1) -> {
+                String mo, da, ye;
 
-                    if (day1 < 10 && month1 < 10) {
-                        mo = String.format("%2d", month1).replace(' ', '0');
-                        da = String.format("%2d", day1).replace(' ', '0');
-                        ye = String.format("%d", year1);
-                    } else if (day1 < 10) {
-                        da = String.format("%2d", day1).replace(' ', '0');
-                        ye = String.format("%d", year1);
-                        mo = String.format("%d", month1);
-                    } else if (month1 < 10) {
-                        ye = String.format("%d", year1);
-                        mo = String.format("%2d", month1).replace(' ', '0');
-                        da = String.format("%d", day1);
-                    } else {
-                        ye = String.format("%d", year1);
-                        mo = String.format("%d", month1);
-                        da = String.format("%d", day1);
-                    }
-                    sDate = ye + "-" + mo + "-" + da;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                        lDate = LocalDate.parse(sDate, dtf);
-                    }
+                ye = String.format(Locale.US, "%d", year1);
+                mo = String.format(Locale.US, "%d", month1);
+                da = String.format(Locale.US, "%d", day1);
 
+                if (day1 < 10) {
+                    da = String.format(Locale.US, "%2d", day1).replace(' ', '0');
+                }
+                if (month1 < 10) {
+                    mo = String.format(Locale.US, "%2d", month1).replace(' ', '0');
+                }
+                sDate = ye + "-" + mo + "-" + da;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    lDate = LocalDate.parse(sDate, dtf);
+                }
+            }, year, month, day);
+            datePickerDialog.show();
 
-                }, year, month, day);
-                datePickerDialog.show();
-
-            }
         });
         /*database logic here*/
 
