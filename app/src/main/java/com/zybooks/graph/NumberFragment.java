@@ -101,6 +101,7 @@ public class NumberFragment extends Fragment {
         mDateData.setOnClickListener(view1 -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(mDateData.getContext(), (datePicker, year1, month1, day1) -> {
                 String mo, da, ye;
+                month1++;
 
                 ye = String.format(Locale.US, "%d", year1);
                 mo = String.format(Locale.US, "%d", month1);
