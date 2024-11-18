@@ -58,17 +58,18 @@ public class NumberFragment extends Fragment {
     List<WeightData> weightDataList;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_number, container, false);
     }
 
-    public void onViewCreated(@NonNull View view, Bundle saveInstanceState){
+    public void onViewCreated(@NonNull View view, Bundle saveInstanceState) {
         mWeightData = view.findViewById(R.id.numberfragment_weight);
         mDateData = view.findViewById(R.id.nf_calendar);
         Button nfSave = view.findViewById(R.id.numberfragment_save);
@@ -82,7 +83,7 @@ public class NumberFragment extends Fragment {
 
         RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
             @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db){
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
             }
 
@@ -92,7 +93,7 @@ public class NumberFragment extends Fragment {
             }
         };
 
-        weightDataDB = Room.databaseBuilder(getContext(), WeightDataRepo.class,"WeightDataDB")
+        weightDataDB = Room.databaseBuilder(getContext(), WeightDataRepo.class, "WeightDataDB")
                 .addCallback(myCallBack).fallbackToDestructiveMigration().build();
 
         Calendar calendar = Calendar.getInstance();
@@ -114,38 +115,37 @@ public class NumberFragment extends Fragment {
             datePickerDialog.show();
         });*/
 
-        mDateData.setOnClickListener(new View.OnClickListener(){
+        mDateData.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(mDateData.getContext(), (datePicker, year1, month1, day1) -> {
                     String mo, da, ye;
 
-                    if(day1 < 10 && month1 <10){
-                        mo = String.format("%2d",month1).replace(' ','0');
-                         da = String.format("%2d",day1).replace(' ','0');
+                    if (day1 < 10 && month1 < 10) {
+                        mo = String.format("%2d", month1).replace(' ', '0');
+                        da = String.format("%2d", day1).replace(' ', '0');
                         ye = String.format("%d", year1);
-                    }
-                    else if (day1 < 10) {
-                        da = String.format("%2d",day1).replace(' ','0');
+                    } else if (day1 < 10) {
+                        da = String.format("%2d", day1).replace(' ', '0');
                         ye = String.format("%d", year1);
                         mo = String.format("%d", month1);
                     } else if (month1 < 10) {
                         ye = String.format("%d", year1);
-                        mo = String.format("%2d",month1).replace(' ','0');
+                        mo = String.format("%2d", month1).replace(' ', '0');
                         da = String.format("%d", day1);
                     } else {
                         ye = String.format("%d", year1);
                         mo = String.format("%d", month1);
-                         da = String.format("%d", day1);
+                        da = String.format("%d", day1);
                     }
-                    sDate = ye+"-"+mo+"-"+da;
+                    sDate = ye + "-" + mo + "-" + da;
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         lDate = LocalDate.parse(sDate, dtf);
                     }
 
 
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
 
             }
@@ -153,23 +153,23 @@ public class NumberFragment extends Fragment {
         /*database logic here*/
 
 
-        nfSave.setOnClickListener(v-> {
+        nfSave.setOnClickListener(v -> {
             String weightStr = mWeightData.getText().toString();
             int numWeight = 0;
             try {
                 numWeight = Integer.parseInt(weightStr);
-            }catch(Exception e){
-                Log.d("Weight Data","Not Numeric");
+            } catch (Exception e) {
+                Log.d("Weight Data", "Not Numeric");
             }
-            WeightData wd1 = new WeightData(lDate,numWeight);
+            WeightData wd1 = new WeightData(lDate, numWeight);
 
             addWeightDataInBackground(wd1);
             mWeightData.setText("");
         });
-        nfPrint.setOnClickListener(v->{
+        nfPrint.setOnClickListener(v -> {
             getWeightDataListInBackground();
         });
-        nfClear.setOnClickListener(v->{
+        nfClear.setOnClickListener(v -> {
             clearWeightDataListInBackground();
         });
         /*
@@ -178,16 +178,16 @@ public class NumberFragment extends Fragment {
         });*/
 
 
-
     }
-    public void addWeightDataInBackground(WeightData weightData){
+
+    public void addWeightDataInBackground(WeightData weightData) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         Handler handler = new Handler(Looper.getMainLooper());
 
         executorService.execute(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 //background task
                 weightDataDB.getWeightDataDAO().addWeightData(weightData);
 
@@ -195,7 +195,7 @@ public class NumberFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(),"Added to Database", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Added to Database", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -203,14 +203,14 @@ public class NumberFragment extends Fragment {
 
     }
 
-    public void getWeightDataListInBackground(){
+    public void getWeightDataListInBackground() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         Handler handler = new Handler(Looper.getMainLooper());
 
         executorService.execute(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 //background task
                 weightDataList = weightDataDB.getWeightDataDAO().getOAllWeightData();
 
@@ -219,8 +219,8 @@ public class NumberFragment extends Fragment {
                     @Override
                     public void run() {
                         StringBuilder sb = new StringBuilder();
-                        for(WeightData w : weightDataList){
-                            sb.append(" "+w.getDate()+":"+ w.getWeight()+" lbs");
+                        for (WeightData w : weightDataList) {
+                            sb.append(" " + w.getDate() + ":" + w.getWeight() + " lbs");
                             sb.append("\n");
                         }
                         String printData = sb.toString();
@@ -232,14 +232,15 @@ public class NumberFragment extends Fragment {
         });
 
     }
-    public void clearWeightDataListInBackground(){
+
+    public void clearWeightDataListInBackground() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         Handler handler = new Handler(Looper.getMainLooper());
 
         executorService.execute(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 //background task
 
                 weightDataDB.getWeightDataDAO().deleteAllwd();

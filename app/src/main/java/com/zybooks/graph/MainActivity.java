@@ -7,6 +7,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 fragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainerView, NumberFragment.class,null)
+                        .replace(R.id.fragmentContainerView, NumberFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack("name")
                         .commit();
@@ -45,17 +46,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 fragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainerView, GraphFragment.class,null)
+                        .replace(R.id.fragmentContainerView, GraphFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack("name")
                         .commit();
             }
         });
-        btnBmiBmr.setOnClickListener(new View.OnClickListener(){
+        btnBmiBmr.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainerView, bmiCalculator.class,null)
+                        .replace(R.id.fragmentContainerView, bmiCalculator.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack("name")
                         .commit();

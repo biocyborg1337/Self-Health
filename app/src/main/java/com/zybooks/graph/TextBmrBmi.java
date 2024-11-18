@@ -24,6 +24,7 @@ public class TextBmrBmi extends Fragment {
             "If you are active, you may still be healthy. Alert: BMI cannot tell you about your body composition.";
     private String obeseBMI = "You are obese, try your best to make lifestyle changes. Alert: BMI cannot tell you about your body composition.";
     private String underweightBMI = "You are underweight, try your best to make lifestyle changes. Alert: BMI cannot tell you about your body composition.";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,27 +40,26 @@ public class TextBmrBmi extends Fragment {
         text2 = view.findViewById(R.id.textView2);
 
 
-               Double a = getArguments().getDouble("br1");
-                String b = a.toString();
-                sb.append("Daily Calorie Need: "+ b);
-                sb.append(" cal.\n");
+        Double a = getArguments().getDouble("br1");
+        String b = a.toString();
+        sb.append("Daily Calorie Need: " + b);
+        sb.append(" cal.\n");
 
-                Double a1 = getArguments().getDouble("abmi");
-                String b1 = a1.toString();
-                sb.append("Body Mass Index: "+ b1 + " kg/m^2");
+        Double a1 = getArguments().getDouble("abmi");
+        String b1 = a1.toString();
+        sb.append("Body Mass Index: " + b1 + " kg/m^2");
 
         concat = sb.toString();
         text1.setText(concat);
-       if(a1 >= 18 && a1 <= 25){
+        if (a1 >= 18 && a1 <= 25) {
             text2.setText(healthyBMI);
         } else if (a1 < 18) {
-           text2.setText(underweightBMI);
-       } else if (a1 > 25 && a1 <= 30) {
-           text2.setText(overweightBMI);
-       }
-       else{
-           text2.setText(obeseBMI);
-       }
+            text2.setText(underweightBMI);
+        } else if (a1 > 25 && a1 <= 30) {
+            text2.setText(overweightBMI);
+        } else {
+            text2.setText(obeseBMI);
+        }
 
 
         sb.setLength(0);

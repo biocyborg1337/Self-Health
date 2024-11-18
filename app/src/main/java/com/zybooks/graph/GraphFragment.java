@@ -30,19 +30,21 @@ public class GraphFragment extends Fragment {
     LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[0]);
     GraphView chart;
     Button gfSort;
+
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_graph,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_graph, container, false);
         chart = (GraphView) view.findViewById(R.id.chart);
-         gfSort = view.findViewById(R.id.gf_sort);
+        gfSort = view.findViewById(R.id.gf_sort);
         chart.addSeries(series);
         RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
             @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db){
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
             }
 
@@ -52,15 +54,16 @@ public class GraphFragment extends Fragment {
             }
         };
 
-        weightDataDB = Room.databaseBuilder(getContext(), WeightDataRepo.class,"WeightDataDB")
+        weightDataDB = Room.databaseBuilder(getContext(), WeightDataRepo.class, "WeightDataDB")
                 .addCallback(myCallBack).build();
 
-        gfSort.setOnClickListener(v->{
+        gfSort.setOnClickListener(v -> {
             getOWeightDataListInBackground();
         });
 
-    return view;
+        return view;
     }
+
     public void getOWeightDataListInBackground() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -71,7 +74,6 @@ public class GraphFragment extends Fragment {
             public void run() {
                 //background task
                 wd = weightDataDB.getWeightDataDAO().getOAllWeightData();
-
 
 
                 //on finishing task
@@ -86,12 +88,13 @@ public class GraphFragment extends Fragment {
             }
         });
     }
-    private DataPoint[] getData(){
+
+    private DataPoint[] getData() {
 
         DataPoint[] dp = new DataPoint[wd.size()];
         int index = 0;
-        for(WeightData w: wd){
-            dp[index] = new DataPoint(index,(double)w.getWeight());
+        for (WeightData w : wd) {
+            dp[index] = new DataPoint(index, (double) w.getWeight());
             index++;
         }
 

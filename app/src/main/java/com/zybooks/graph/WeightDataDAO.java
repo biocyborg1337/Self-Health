@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
+
 @Dao
 public interface WeightDataDAO {
 
@@ -22,6 +23,7 @@ public interface WeightDataDAO {
 
     @Query("select * from `weight chart`")
     public List<WeightData> getAllWeightData();
+
     @Query("select * from `weight chart` Order by date ASC")
     public List<WeightData> getOAllWeightData();
 

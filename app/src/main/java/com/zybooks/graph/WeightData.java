@@ -1,4 +1,5 @@
 package com.zybooks.graph;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 
 @Entity(tableName = "Weight Chart")
 public class WeightData implements Parcelable {
-    @ColumnInfo(name="id")
+    @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     int id;
 
@@ -27,9 +28,10 @@ public class WeightData implements Parcelable {
     Integer weight;
 
     @Ignore
-    public WeightData(){}
+    public WeightData() {
+    }
 
-    public WeightData(LocalDate date, Integer weight){
+    public WeightData(LocalDate date, Integer weight) {
         this.date = date;
         this.weight = weight;
         this.id = 0;
@@ -56,14 +58,21 @@ public class WeightData implements Parcelable {
         }
     };
 
-    public LocalDate getDate(){
+    public LocalDate getDate() {
         return date;
     }
-    public Integer getWeight(){return weight;}
-    public void setDate(LocalDate date){
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setDate(LocalDate date) {
         this.date = date;
     }
-    public void setWeight(Integer weight){this.weight = weight;}
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
 
     @Override
     public int describeContents() {
