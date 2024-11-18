@@ -1,11 +1,6 @@
 package com.zybooks.graph;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,19 +8,23 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class GraphFragment extends Fragment {
+
+public class LogText extends Fragment {
+    TextView text;
     List<WeightData> wd;
     WeightDataRepo weightDataDB;
-    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[0]);
-    GraphView chart;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,12 @@ public class GraphFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_graph, container, false);
-        chart = view.findViewById(R.id.chart);
-        chart.addSeries(series);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_log_text, container, false);
+
+       text = view.findViewById(R.id.fragLogText);
         RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -52,12 +53,14 @@ public class GraphFragment extends Fragment {
         weightDataDB = Room.databaseBuilder(requireContext(), WeightDataRepo.class, "WeightDataDB")
                 .addCallback(myCallBack).build();
 
-        getOWeightDataListInBackground();
+        getWeightDataListInBackground();
+        text.setMovementMethod(new ScrollingMovementMethod());
 
+
+        // Inflate the layout for this fragment
         return view;
     }
-
-    public void getOWeightDataListInBackground() {
+    public void getWeightDataListInBackground() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         Handler handler = new Handler(Looper.getMainLooper());
@@ -66,25 +69,18 @@ public class GraphFragment extends Fragment {
             //background task
             wd = weightDataDB.getWeightDataDAO().getOAllWeightData();
 
-
             //on finishing task
             handler.post(() -> {
-
-                series.resetData(getData());
+                StringBuilder sb = new StringBuilder();
+                for (WeightData w : wd) {
+                    sb.append(" ").append(w.getDate()).append(":").append(w.getWeight()).append(" lbs");
+                    sb.append("\n");
+                }
+                String printData = sb.toString();
+                text.setText(printData);
                 //Toast.makeText(getContext(), ""+printData, Toast.LENGTH_LONG).show();
             });
         });
-    }
 
-    private DataPoint[] getData() {
-
-        DataPoint[] dp = new DataPoint[wd.size()];
-        int index = 0;
-        for (WeightData w : wd) {
-            dp[index] = new DataPoint(index, (double) w.getWeight());
-            index++;
-        }
-
-        return dp;
     }
 }

@@ -10,11 +10,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 public class bmiCalculator extends Fragment {
     private ImageView logo;
     private EditText poundsvalue, feetsvalue, bmiresult, aage;
-    private CheckBox female, masculine, sed, sal, mal, al, va;
+    private RadioButton female, masculine, sed, sal, mal, al, va;
     private Button bmi, idealweight, erase;
     private Double maleBmr, womanBmr, maleABmr, womanABmr, adultBmi;
     CalcBmrBmi cbb = new CalcBmrBmi();
@@ -36,6 +37,7 @@ public class bmiCalculator extends Fragment {
         bmiresult = view.findViewById(R.id.etResult);
         bmi = view.findViewById(R.id.buttonbmi);
         idealweight = view.findViewById(R.id.buttonideal);
+
         female = view.findViewById(R.id.fem);
         masculine = view.findViewById(R.id.mas);
         sed = view.findViewById(R.id.sed);
