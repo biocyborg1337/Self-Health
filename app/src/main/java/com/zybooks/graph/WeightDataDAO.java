@@ -25,7 +25,7 @@ public interface WeightDataDAO {
     List<WeightData> getAllWeightData();
 
     @Query("select * from `weight chart` Order by date ASC")
-    List<WeightData> getOAllWeightData();
+    List<WeightData> getDateASCWeightData();
 
     @Query("DELETE FROM `weight chart`")
     void deleteAllwd();
@@ -33,5 +33,7 @@ public interface WeightDataDAO {
     @Query("select * from `weight chart` where id ==:id")
     WeightData getWeightData(int id);
 
+    @Query("DELETE FROM `weight chart` where date = :date")
+    void deleteSpecificDate(String date);
 
 }

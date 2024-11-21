@@ -63,7 +63,7 @@ android {
 android.useAndroidX=true
 android.enableJetifier=true
 
-***then in WeightDataRepo.java, if the code fails for DAO reasons
+***then in WeightDataDatabase.java, if the code fails for DAO reasons
  @Database(entities = {WeightData.class},version = 2) with
 @Database(entities = {WeightData.class},version = 1)
 

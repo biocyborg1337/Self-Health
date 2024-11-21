@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#040404"
     android:orientation="vertical"
     android:padding="0dp"
     tools:context=".GraphFragment">
@@ -22,7 +22,8 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.491" />
+            app:layout_constraintVertical_bias="0.491"
+            android:visibility="gone"/>
 
         <com.jjoe64.graphview.GraphView
             android:id="@+id/chart"

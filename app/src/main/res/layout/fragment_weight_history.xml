@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".NumberFragment">
+    tools:context=".WeightHistory">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             app:layout_constraintVertical_bias="0.098" />
 
         <TextView
-            android:id="@+id/numberfragment_text"
+            android:id="@+id/weightHistory_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nf_weight"
@@ -50,7 +50,7 @@
             app:layout_constraintVertical_bias="0.23" />
 
         <EditText
-            android:id="@+id/numberfragment_weight"
+            android:id="@+id/weightHistory_weight"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:ems="8"
@@ -63,7 +63,7 @@
             app:layout_constraintVertical_bias="0.281" />
 
         <Button
-            android:id="@+id/numberfragment_save"
+            android:id="@+id/weightHistory_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save_button"
@@ -71,13 +71,13 @@
             android:theme="@style/buttonStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.627"
+            app:layout_constraintHorizontal_bias="0.649"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.37" />
 
         <Button
-            android:id="@+id/numberfragment_print"
+            android:id="@+id/weightHistory_print"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/print_button"
@@ -91,34 +91,49 @@
             app:layout_constraintVertical_bias="0.37" />
 
         <Button
-            android:id="@+id/numberfragment_clear"
+            android:id="@+id/weightHistory_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="@string/clear_button"
             android:textAlignment="center"
             android:theme="@style/buttonStyle"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.34"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.48" />
+            app:layout_constraintVertical_bias="0.458" />
+
+        <Button
+            android:id="@+id/weightHistory_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_date"
+            android:textAlignment="center"
+            android:theme="@style/buttonStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.695"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.458" />
 
         <TextView
-            android:id="@+id/numberfragment_show"
+            android:id="@+id/weightHistory_show"
             android:layout_width="396dp"
             android:layout_height="330dp"
+            android:text="@string/weightHistory_instruction"
             app:autoSizeMaxTextSize="25sp"
             app:autoSizeMinTextSize="10sp"
             app:autoSizeTextType="uniform"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.466"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.96" />
+            app:layout_constraintVertical_bias="0.985" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <!--android:string="@string/"-->
 
 </FrameLayout>

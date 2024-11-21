@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 public class LogText extends Fragment {
     TextView text;
     List<WeightData> wd;
-    WeightDataRepo weightDataDB;
+    WeightDataDatabase weightDataDB;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class LogText extends Fragment {
             }
         };
 
-        weightDataDB = Room.databaseBuilder(requireContext(), WeightDataRepo.class, "WeightDataDB")
+        weightDataDB = Room.databaseBuilder(requireContext(), WeightDataDatabase.class, "WeightDataDB")
                 .addCallback(myCallBack).build();
 
         getWeightDataListInBackground();
@@ -60,14 +60,14 @@ public class LogText extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
-    public void getWeightDataListInBackground() {
+    private void getWeightDataListInBackground() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         Handler handler = new Handler(Looper.getMainLooper());
 
         executorService.execute(() -> {
             //background task
-            wd = weightDataDB.getWeightDataDAO().getOAllWeightData();
+            wd = weightDataDB.getWeightDataDAO().getDateASCWeightData();
 
             //on finishing task
             handler.post(() -> {

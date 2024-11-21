@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-/**/
+
 public class TextBmrBmi extends Fragment {
     private final StringBuilder sb = new StringBuilder();
-    //private double bmrAL;
-    //private double bmi;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,17 +41,17 @@ public class TextBmrBmi extends Fragment {
         String concat = sb.toString();
         text1.setText(concat);
         if (a1 >= 18 && a1 <= 25) {
-            String healthyBMI = "You are within the Healthy range of BMI! Alert: BMI cannot tell you about your body composition.";
+            String healthyBMI = "You are within the Healthy range of BMI!\n\n\n\n Warning: BMI isn't the only significant metric in health so be sure to refer to other metrics before making any changes.";
             text2.setText(healthyBMI);
         } else if (a1 < 18) {
-            String underweightBMI = "You are underweight, try your best to make lifestyle changes. Alert: BMI cannot tell you about your body composition.";
+            String underweightBMI = "You are underweight, try your best to make lifestyle changes.\n\n\n\n Warning: BMI isn't the only significant metric in health so be sure to refer to other metrics before making any changes.";
             text2.setText(underweightBMI);
         } else if (a1 > 25 && a1 <= 30) {
-            String overweightBMI = "You are overweight if you have a normal build." +
-                    "If you are active, you may still be healthy. Alert: BMI cannot tell you about your body composition.";
+            String overweightBMI = "You are overweight but" +
+                    " if you are active, you may still be healthy.\n\n\n\n Warning: BMI isn't the only significant metric in health so be sure to refer to other metrics before making any changes.";
             text2.setText(overweightBMI);
         } else {
-            String obeseBMI = "You are obese, try your best to make lifestyle changes. Alert: BMI cannot tell you about your body composition.";
+            String obeseBMI = "You are obese, try to make lifestyle changes.\n\n\n\n Warning: BMI isn't the only significant metric in health so be sure to refer to other metrics before making any changes.";
             text2.setText(obeseBMI);
         }
 

@@ -7,16 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 
+
 public class bmiCalculator extends Fragment {
-    private ImageView logo;
     private EditText poundsvalue, feetsvalue, bmiresult, aage;
     private RadioButton female, masculine, sed, sal, mal, al, va;
-    private Button bmi, idealweight, erase;
+    private Button bmi, idealweight;
     private Double maleBmr, womanBmr, maleABmr, womanABmr, adultBmi;
     CalcBmrBmi cbb = new CalcBmrBmi();
 
@@ -62,8 +60,7 @@ public class bmiCalculator extends Fragment {
                 height = Integer.parseInt(fs);
                 age = Integer.parseInt(ag);
             } catch (Exception e) {
-                Log.d("BMI button", "Invalid input");
-                return; // exit on invalid input
+                Log.d("bmiCalculator", "Invalid input");
             }
 
             // Common BMI calculation using pounds and inches
