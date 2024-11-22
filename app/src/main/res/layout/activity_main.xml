@@ -12,12 +12,11 @@
         android:id="@+id/LL2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="62dp"
+            android:layout_height="63dp"
             android:background="#040404"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/LL2">
@@ -77,11 +76,11 @@
         <androidx.fragment.app.FragmentContainerView
 
             android:id="@+id/fragmentContainerView"
-            android:name="com.zybooks.graph.NumberFragment"
+            android:name="com.zybooks.graph.WeightHistory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/fragment_number"
-            android:layout_margin="5dp"/>
+            android:layout_margin="0dp"
+            tools:layout="@layout/fragment_weighthistory" />
     </LinearLayout>
 
 </LinearLayout>

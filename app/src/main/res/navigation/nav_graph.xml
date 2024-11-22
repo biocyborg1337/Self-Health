@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/number_fragment"
-        android:name="com.zybooks.graph.NumberFragment"
+        android:name="com.zybooks.graph.WeightHistory"
         android:label="@string/app_name">
         <action
             android:id="@+id/show_graph_detail"

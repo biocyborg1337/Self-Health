@@ -1,7 +1,8 @@
 package com.zybooks.graph;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.os.Build;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,8 +22,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -30,38 +29,37 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class NumberFragment extends Fragment {
+public class WeightHistory extends Fragment {
     private EditText mWeightData;
     private ImageView mDateData;
     String sDate;
-    LocalDate lDate;
     TextView printDB;
-    WeightDataRepo weightDataDB;
-    //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[0]);
+    WeightDataDatabase weightDataDB;
     List<WeightData> weightDataList;
-
+    String year2,month2,day2;
+    int year, month, day;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_number, container, false);
+
+
+        return inflater.inflate(R.layout.fragment_weighthistory, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle saveInstanceState) {
-        mWeightData = view.findViewById(R.id.numberfragment_weight);
+        mWeightData = view.findViewById(R.id.weighthistory_weight);
         mDateData = view.findViewById(R.id.nf_calendar);
-        Button nfSave = view.findViewById(R.id.numberfragment_save);
-        Button nfPrint = view.findViewById(R.id.numberfragment_print);
-        Button nfClear = view.findViewById(R.id.numberfragment_clear);
-        printDB = view.findViewById(R.id.numberfragment_show);
-        /*Button nfSort = getView().findViewById(R.id.numberfragment_sort);
-         chart = (GraphView) view.findViewById(R.id.chart);
-         chart.addSeries(series);*/
+        Button whSave = view.findViewById(R.id.weighthistory_save);
+        Button whPrint = view.findViewById(R.id.weighthistory_print);
+        Button whClear = view.findViewById(R.id.weighthistory_clear);
+        printDB = view.findViewById(R.id.weighthistory_show);
+        Button whDelete = view.findViewById(R.id.weighthistory_delete);
+        Button whHelp = view.findViewById(R.id.weighthistory_help);
 
 
         RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
@@ -76,27 +74,12 @@ public class NumberFragment extends Fragment {
             }
         };
 
-        weightDataDB = Room.databaseBuilder(requireContext(), WeightDataRepo.class, "WeightDataDB")
+        weightDataDB = Room.databaseBuilder(requireContext(), WeightDataDatabase.class, "WeightDataDB")
                 .addCallback(myCallBack).fallbackToDestructiveMigration().build();
 
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        InitCalendar();
 
 
-        /*
-        mDateData.setOnClickListener(view-> {
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(mDateData.getContext(),(datePicker, year1, month1, day1) -> {
-                month1 = month1 + 1;
-                String mo = String.format("%32d", month1);
-                String da = String.format("%32d",day1);
-                sDate = year1+"-"+mo+"-"+da;
-
-            },year,month,day);
-            datePickerDialog.show();
-        });*/
 
         mDateData.setOnClickListener(view1 -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(mDateData.getContext(), (datePicker, year1, month1, day1) -> {
@@ -104,8 +87,8 @@ public class NumberFragment extends Fragment {
                 month1++;
 
                 ye = String.format(Locale.US, "%d", year1);
-                mo = String.format(Locale.US, "%d", month1);
-                da = String.format(Locale.US, "%d", day1);
+                mo = String.format(Locale.US, "%2d", month1);
+                da = String.format(Locale.US, "%2d", day1);
 
                 if (day1 < 10) {
                     da = String.format(Locale.US, "%2d", day1).replace(' ', '0');
@@ -114,18 +97,15 @@ public class NumberFragment extends Fragment {
                     mo = String.format(Locale.US, "%2d", month1).replace(' ', '0');
                 }
                 sDate = ye + "-" + mo + "-" + da;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    lDate = LocalDate.parse(sDate, dtf);
-                }
+
             }, year, month, day);
             datePickerDialog.show();
 
         });
-        /*database logic here*/
 
 
-        nfSave.setOnClickListener(v -> {
+
+        whSave.setOnClickListener(v -> {
             String weightStr = mWeightData.getText().toString();
             int numWeight = 0;
             try {
@@ -133,20 +113,17 @@ public class NumberFragment extends Fragment {
             } catch (Exception e) {
                 Log.d("Weight Data", "Not Numeric");
             }
-            if(lDate == null) if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                lDate = LocalDate.now();
-            }
-            WeightData wd1 = new WeightData(lDate, numWeight);
+
+            WeightData wd1 = new WeightData(sDate, numWeight);
 
             addWeightDataInBackground(wd1);
             mWeightData.setText("");
+            InitCalendar();
         });
-        nfPrint.setOnClickListener(v -> getWeightDataListInBackground());
-        nfClear.setOnClickListener(v -> clearWeightDataListInBackground());
-        /*
-        nfSort.setOnClickListener(v->{
-            getOWeightDataListInBackground();
-        });*/
+        whPrint.setOnClickListener(v -> getWeightDataListInBackground());
+        whClear.setOnClickListener(v -> clearWeightDataListInBackground());
+        whDelete.setOnClickListener(v->deleteSpecifiedDateInBackground(sDate));
+        whHelp.setOnClickListener(v->makeDialog());
 
 
     }
@@ -208,43 +185,49 @@ public class NumberFragment extends Fragment {
             handler.post(() -> Toast.makeText(getContext(), "Database cleared!", Toast.LENGTH_SHORT).show());
         });
 
-    }/*
-    public void getOWeightDataListInBackground() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
 
+
+    }
+    private void deleteSpecifiedDateInBackground(String date){
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                //background task
-                weightDataList = weightDataDB.getWeightDataDAO().getOAllWeightData();
-
-
-
-                //on finishing task
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        series.resetData(getData());
-                        //Toast.makeText(getContext(), ""+printData, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+        executorService.execute(()->{
+            weightDataDB.getWeightDataDAO().deleteSpecificDate(sDate);
+            handler.post(() -> Toast.makeText(getContext(),sDate+" removed!", Toast.LENGTH_SHORT).show());
         });
     }
-    private DataPoint[] getData(){
+    private void InitCalendar(){
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        year2 = String.format(Locale.US, "%d", year);
+        month2= String.format(Locale.US, "%2d", month+1);
+        day2 = String.format(Locale.US, "%2d", day);
 
-        DataPoint[] dp = new DataPoint[weightDataList.size()];
-        int index = 0;
-        for(WeightData w: weightDataList){
-            dp[index] = new DataPoint((double)index,(double)w.getWeight());
-            index++;
+        if(day < 10){
+            day2 = String.format(Locale.US, "%2d",day).replace(' ','0');
         }
+        if(month < 10){
+            month2 = String.format(Locale.US, "%2d",month).replace(' ','0');
+        }
+        sDate = year2+"-"+month2+"-"+day2;
+    }
+    private void makeDialog(){
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle("Instructions");
+        alertDialog.setMessage(getResources().getString(R.string.weightHistory_instruction));
+        alertDialog.setIcon(R.drawable.logo);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
-        return dp;
-    }*/
+            }
+        });
+        alertDialog.show();
+    }
+
 
 }
 

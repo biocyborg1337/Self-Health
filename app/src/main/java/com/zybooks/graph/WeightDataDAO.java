@@ -33,5 +33,7 @@ public interface WeightDataDAO {
     @Query("select * from `weight chart` where id ==:id")
     WeightData getWeightData(int id);
 
+    @Query("DELETE FROM `weight chart` where date ==:date")
+    void deleteSpecificDate(String date);
 
 }

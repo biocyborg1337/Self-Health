@@ -11,7 +11,8 @@
     <string name="ma_btnChart">Progress</string>
     <string name="print_button">Print</string>
     <string name="clear_button">Clear</string>
-    <string name="sort_button">Sort</string>
+    <string name="delete_button">Delete</string>
+    <string name="help_button">Help</string>
 
     <string name="faq_fragment">
         <b>What is BMI?</b>\nBMI is a very basic tool use to divide people into weight classes.
@@ -32,5 +33,11 @@
         <b>How can I gain weight in a healthy way?</b>\n
         Gaining weight is slightly more complicated, as while the same basic principle still applies, you run into the risk of gaining just fat if you simply start scarfing down a bunch of food in order to surpass your caloric need.
         You should maintain a steady level of activity as you gain weight alongside a healthy diet in order to make sure you are not gaining purely fat.
+    </string>
+
+    <string name="weightHistory_instruction">
+        <b>Basic Functions</b>\nPress the calendar and select a date, then enter your weight and press the save button.\nPress print to view previous entries.\n
+        <b>Other functions</b>\nPress the clear button if you wish to remove all of your entries.\nTo delete a date entry, press the calendar then press the duplicate and then press the delete button.
+
     </string>
 </resources>

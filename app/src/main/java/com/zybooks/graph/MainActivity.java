@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnwi.setOnClickListener(view -> fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, NumberFragment.class, null)
+                .replace(R.id.fragmentContainerView, WeightHistory.class, null)
                 .setReorderingAllowed(true)
                 .addToBackStack("name")
                 .commit());

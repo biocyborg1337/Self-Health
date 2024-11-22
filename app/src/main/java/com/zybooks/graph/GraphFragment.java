@@ -13,17 +13,20 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class GraphFragment extends Fragment {
     List<WeightData> wd;
-    WeightDataRepo weightDataDB;
+    WeightDataDatabase weightDataDB;
     LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[0]);
     GraphView chart;
 
@@ -49,8 +52,30 @@ public class GraphFragment extends Fragment {
             }
         };
 
-        weightDataDB = Room.databaseBuilder(requireContext(), WeightDataRepo.class, "WeightDataDB")
+        weightDataDB = Room.databaseBuilder(requireContext(), WeightDataDatabase.class, "WeightDataDB")
                 .addCallback(myCallBack).build();
+        series.setTitle("Weight (lbs)");
+
+        chart.getLegendRenderer().setVisible(true);
+        chart.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        numberFormat.setMinimumIntegerDigits(2);
+        numberFormat.setMaximumIntegerDigits(4);
+
+        chart.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(numberFormat, numberFormat));
+        series.setDrawDataPoints(true);
+        chart.getGridLabelRenderer().setHorizontalAxisTitle("Earliest to Latest");
+        chart.setBackgroundColor(getResources().getColor(R.color.white));
+
+        chart.getViewport().setScalable(true);
+        chart.getViewport().setScrollable(true);
+
+        chart.getViewport().setXAxisBoundsManual(true);
+        chart.getViewport().setMinX(0);
+        chart.getViewport().setMaxX(4);
+
+
 
         getOWeightDataListInBackground();
 
