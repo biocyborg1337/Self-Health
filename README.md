@@ -24,3 +24,24 @@
 - Visualize **weekly progress** to stay motivated and on track.  
 
 ---
+## Instructions
+
+### Top Bar
+Ideal Weight allows you to calculate your Body Mass Index, Basal Metabolic Rate and the Ideal Weight range for your height. Just enter your data and press the corresponding button. The BMI and BMR calculations are done on the same button.
+
+FAQ answers questions pertaining to weight and health.
+
+Log allows you to track your weight from various days. 
+
+Progress shows what you saved on a chart. It is scrollable when you have more than 5 entries.
+
+### Internal Buttons
+
+Ideal Weight 
+BMI - bmi and bmr calculation, IDEAL WEIGHT - ideal weight calculation, ERASE - erase what you typed
+
+Log 
+Print - print on the screen what you've entered, **Save - save the information you entered by pressing the calendar, selecting a date, then entering your weight and press Save**, Clear - erase everything you've added, **Delete - remove entries for a specified date by clicking the calendar then pressing the date you wish to remove and then pressing Delete**, Help - provides instructions for logging.
+
+---
+
